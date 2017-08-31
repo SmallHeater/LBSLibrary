@@ -50,77 +50,13 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark  ----  代理
-#pragma mark  ----  UISearchBarDelegate
-#pragma mark  ----  UITableViewDataSource
-
-#pragma mark  ----  显示每组标题索引
--(NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView{
-    return self.initialsArray;
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return self.showDataArray.count;
-}
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    NSDictionary * dic = self.showDataArray[section];
-    NSArray * rowsArray = dic.allValues[0];
-    return rowsArray.count;
-}
-
-- (nullable NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    NSDictionary * dic = self.showDataArray[section];
-    NSString * title = dic.allKeys[0];
-    return title;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    UITableViewCell * cityCell = [tableView dequeueReusableCellWithIdentifier:@"city"];
-    if (!cityCell) {
-        cityCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"city"];
-        cityCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
-    
-    NSDictionary * cityDic = self.showDataArray[indexPath.section];
-    NSArray * cityArray = cityDic.allValues;
-    cityCell.textLabel.text = cityArray[0][indexPath.row];
-    NSLog(@"4");
-    return cityCell;
-}
-#pragma mark  ----  UITableViewDelegate
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 44;
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 44;
-}
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSDictionary * selectedDic = self.showDataArray[indexPath.section];
-    NSArray * valueArray = selectedDic.allValues;
-    NSString * selectedCity = valueArray[0][indexPath.row];
-    UIAlertController * selectedCityAlert = [UIAlertController alertControllerWithTitle:@"选中城市" message:selectedCity preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction * cancleAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        
-    }];
-
-    UIAlertAction * sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-    }];
-    
-    [selectedCityAlert addAction:cancleAction];
-    [selectedCityAlert addAction:sureAction];
-    [self presentViewController:selectedCityAlert animated:YES completion:^{
-        
-    }];
-}
-#pragma mark  ----  方法
+#pragma mark  ----  自定义函数
 
 #pragma mark  ----  返回响应
 -(void)backBtnClicked{
     
     [self dismissViewControllerAnimated:YES completion:^{
-    
+        
     }];
 }
 
@@ -184,6 +120,71 @@
     //排序基准数右边的
     [self quickSortArray:array withLeftIndex:i + 1 andRightIndex:rightIndex];
 }
+
+#pragma mark  ----  代理
+#pragma mark  ----  UITableViewDataSource
+
+#pragma mark  ----  显示每组标题索引
+-(NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView{
+    return self.initialsArray;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return self.showDataArray.count;
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    NSDictionary * dic = self.showDataArray[section];
+    NSArray * rowsArray = dic.allValues[0];
+    return rowsArray.count;
+}
+
+- (nullable NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    NSDictionary * dic = self.showDataArray[section];
+    NSString * title = dic.allKeys[0];
+    return title;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    UITableViewCell * cityCell = [tableView dequeueReusableCellWithIdentifier:@"city"];
+    if (!cityCell) {
+        cityCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"city"];
+        cityCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+    
+    NSDictionary * cityDic = self.showDataArray[indexPath.section];
+    NSArray * cityArray = cityDic.allValues;
+    cityCell.textLabel.text = cityArray[0][indexPath.row];
+    NSLog(@"4");
+    return cityCell;
+}
+#pragma mark  ----  UITableViewDelegate
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 44;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 44;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSDictionary * selectedDic = self.showDataArray[indexPath.section];
+    NSArray * valueArray = selectedDic.allValues;
+    NSString * selectedCity = valueArray[0][indexPath.row];
+    UIAlertController * selectedCityAlert = [UIAlertController alertControllerWithTitle:@"选中城市" message:selectedCity preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction * cancleAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+
+    UIAlertAction * sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    
+    [selectedCityAlert addAction:cancleAction];
+    [selectedCityAlert addAction:sureAction];
+    [self presentViewController:selectedCityAlert animated:YES completion:^{
+        
+    }];
+}
+
 #pragma mark  ----  懒加载
 #pragma mark  ----  导航
 -(UIView *)navView{

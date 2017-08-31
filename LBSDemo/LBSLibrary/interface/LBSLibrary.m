@@ -10,6 +10,8 @@
 #import "CityListViewController.h"
 
 @implementation LBSLibrary
+
+#pragma mark  ----  自定义函数
 static LBSLibrary * lbs = nil;
 +(LBSLibrary *)sharedManager{
     
@@ -20,7 +22,7 @@ static LBSLibrary * lbs = nil;
     return lbs;
 }
 
-#pragma mark    定位
+#pragma mark ----  定位
 -(void)startLocating{
     
     //判断是否开启了定位服务
@@ -57,12 +59,21 @@ static LBSLibrary * lbs = nil;
     }
     [locationManager startUpdatingLocation];
 }
+
+#pragma mark    城市列表的VC
++(UIViewController *)getCityListViewController{
+    
+    CityListViewController * cityListViewController = [[CityListViewController alloc] init];
+    return cityListViewController;
+}
+
+#pragma mark  ----  代理
 #pragma mark    定位失败
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
     //定位失败时，当前定位城市显示@"定位失败"
     NSLog(@"定位失败");
 }
-#pragma mark    位置
+#pragma mark  ----  位置
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     
     CLLocation * location = [locations objectAtIndex:0];
@@ -70,14 +81,6 @@ static LBSLibrary * lbs = nil;
     [locationManager stopUpdatingLocation];
 }
 
-#pragma mark    获取定位到的城市
--(void)getLocationCityWithLatitude:(float)latitude longitude:(float)longitude{
-   
-}
-#pragma mark    城市列表的VC
-+(UIViewController *)getCityListViewController{
-    
-    CityListViewController * cityListViewController = [[CityListViewController alloc] init];
-    return cityListViewController;
-}
+
+
 @end
